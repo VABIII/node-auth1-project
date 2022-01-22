@@ -12,7 +12,6 @@ function restricted(req, res, next) {
     console.log('restricted');
     next();
 }
-
 /*
   If the username in req.body already exists in the database
 
@@ -73,13 +72,12 @@ async function checkUsernameExists(req, res, next) {
   }
 */
 function checkPasswordLength(req, res, next) {
-    next();
+    if(!req.body.password || req.body.password < 3) {
+        next({status: 422, message: "Password must be longer than 3 chars"})
+    } else {
+        next()
+    }
 }
-
-// Don't forget to add these to the `exports` object so they can be required in other modules
-
-
-
 
 module.exports = {
     checkUsernameFree,
